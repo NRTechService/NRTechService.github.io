@@ -9,16 +9,13 @@
     header { background: #ff6f61; color: #fff; padding: 50px 20px; text-align: center; }
     header h1 { margin: 0; font-size: 2.5em; }
     main { padding: 40px 20px; max-width: 900px; margin: auto; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-
     h2 { color: #ff6f61; margin-top: 0; }
-    p { line-height: 1.6; }
-    ul { margin-left: 20px; }
-
-    section { margin-bottom: 50px; }
-
+    p { line-height: 1.6; margin-bottom: 15px; }
+    ul { margin-left: 20px; margin-bottom: 15px; }
+    li { margin-bottom: 8px; }
+    section { margin-bottom: 40px; }
     button { background: #ff6f61; color: #fff; border: none; padding: 15px 25px; cursor: pointer; border-radius: 8px; font-size: 1em; transition: 0.3s; }
     button:hover { background: #e65b50; }
-
     #adminMenu { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: #fff; padding: 30px; border: 3px solid #ff6f61; border-radius: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 350px; }
     #adminMenu h2 { margin-top: 0; color: #ff6f61; }
 </style>
@@ -27,44 +24,43 @@
 
 <header>
     <h1>NR Tech Service</h1>
-    <p>Dein zuverlässiger Helfer bei kleinen technischen Problemen</p>
+    <p>Dein Helfer bei kleinen technischen Problemen – schnell, zuverlässig und günstig.</p>
 </header>
 
 <main>
     <section>
         <h2>Über mich</h2>
-        <p>Hallo! Ich bin Nikita, ich bin Technikbegeistert seit einer weile und immer daran interessiert, anderen zu helfen. Ich liebe es, Probleme zu lösen, Geräte wieder zum Laufen zu bringen und Menschen den Umgang mit Technik einfach zu erklären.</p>
-        <p>Ob du ein Computerproblem hast, Hilfe bei deinem Smartphone brauchst oder einfach Tipps für eine bessere Nutzung deiner Geräte möchtest – ich bin für dich da.</p>
-        <p>Meine Devise: Technik muss kein Stress sein. Ich erkläre alles Schritt für Schritt, verständlich und ohne Fachchinesisch.</p>
+        <p>Hallo, ich bin Nikita. Ich liebe Technik und helfe gerne Menschen, ihre Geräte optimal zu nutzen.</p>
+        <p>Ich erkläre alles einfach und verständlich, damit Technik keinen Stress verursacht.</p>
     </section>
 
     <section>
         <h2>Meine Leistungen</h2>
-        <p>Ich biete Unterstützung bei verschiedenen kleinen technischen Problemen:</p>
+        <p>Ich unterstütze dich bei verschiedenen kleinen technischen Problemen:</p>
         <ul>
-            <li>Installation und Einrichtung von Software auf PC, Laptop, Smartphone oder Tablet</li>
-            <li>Problemlösung bei Fehlermeldungen oder Software-Abstürzen</li>
-            <li>Einrichten von E-Mail-Konten und Datensicherung</li>
-            <li>Tipps zur Verbesserung der Geschwindigkeit und Sicherheit deines Geräts</li>
-            <li>Erklärung von technischen Abläufen und Nutzung von Geräten Schritt für Schritt</li>
+            <li>Installation & Einrichtung von Programmen</li>
+            <li>Fehlerbehebung bei Software oder Geräten</li>
+            <li>Einrichtung von E-Mail-Konten und Datensicherung</li>
+            <li>Tipps zur Verbesserung von Geschwindigkeit und Sicherheit</li>
+            <li>Schritt-für-Schritt-Erklärungen für einfache Bedienung</li>
         </ul>
-        <p>Für meine Unterstützung verlange ich <strong>10 Euro</strong> pro Problem. Transparenz und Fairness sind mir sehr wichtig.</p>
+        <p><strong>Preis:</strong> 10 Euro pro Problem.</p>
     </section>
 
     <section>
         <h2>Warum mich wählen?</h2>
         <ul>
-            <li>Persönliche Betreuung und verständliche Erklärungen</li>
-            <li>Zuverlässigkeit und schnelle Hilfe</li>
-            <li>Flexible Unterstützung für verschiedene Geräte</li>
-            <li>Günstiger Preis – keine versteckten Kosten</li>
+            <li>Persönliche Betreuung & klare Erklärungen</li>
+            <li>Zuverlässige, schnelle Hilfe</li>
+            <li>Unterstützung für PC, Laptop, Smartphone & Tablet</li>
+            <li>Fairer Preis ohne versteckte Kosten</li>
         </ul>
-        <p>Ich möchte, dass Technik wieder Freude macht und kein Stressfaktor ist. Mit meiner Hilfe bekommst du schnelle Lösungen und praktische Tipps für die Zukunft.</p>
+        <p>Mein Ziel: Technik einfach, verständlich und stressfrei zu machen.</p>
     </section>
 
     <section>
         <h2>Kontakt</h2>
-        <p>Wenn du Unterstützung brauchst oder Fragen hast, klicke einfach auf den Knopf und sende mir eine E-Mail:</p>
+        <p>Bei Fragen oder Problemen klicke einfach auf den Knopf, um mir eine E-Mail zu senden:</p>
         <button onclick="location.href='mailto:nrtechservice@gmail.com'">Mir eine E-Mail schreiben</button>
     </section>
 </main>
@@ -79,10 +75,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-let adminPassword = Rezon7; // Dein Admin-Passwort
+let adminPassword = "1234";
 let visitors = JSON.parse(localStorage.getItem('visitors')) || [];
 
-// Gerätetyp ermitteln
 function getDeviceType() {
     const ua = navigator.userAgent;
     if(/Mobi|Android/i.test(ua)) return "Mobil";
@@ -90,11 +85,9 @@ function getDeviceType() {
     return "Desktop";
 }
 
-// Besucher speichern
 visitors.push({time: new Date(), device: getDeviceType()});
 localStorage.setItem('visitors', JSON.stringify(visitors));
 
-// Admin-Menü öffnen
 document.addEventListener('keydown', function(e){
     if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v'){
         let pass = prompt("Admin-Passwort eingeben:");
