@@ -1,163 +1,95 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Privacy-friendly analytics by Plausible -->
-  <script async src="https://plausible.io/js/pa-_O-GwljPQPBuJIK-ZpzR8.js"></script>
-  <script>
-    window.plausible = window.plausible || function () {
-      (plausible.q = plausible.q || []).push(arguments)
-    };
-  </script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nikita – Technik-Hilfe</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f6f8;
-      color: #333;
-    }
-    header {
-      background: #0d6efd;
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    section {
-      max-width: 800px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #0d6efd;
-    }
-    ul {
-      line-height: 1.8;
-    }
-    .contact {
-      text-align: center;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #0d6efd;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-      font-size: 14px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NR Tech Service</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+    header { background: #333; color: #fff; padding: 20px; text-align: center; }
+    main { padding: 20px; max-width: 800px; margin: auto; }
+    button { background: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+    button:hover { background: #0056b3; }
+    #adminMenu { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: #fff; padding: 20px; border: 2px solid #333; border-radius: 10px; z-index: 1000; }
+    #adminMenu h2 { margin-top: 0; }
+</style>
 </head>
-
 <body>
 
-  <header>
-    <h1>Nikita’s Technik-Hilfe</h1>
-    <p>Hilfe bei einfachen technischen Problemen</p>
-  </header>
+<header>
+    <h1>NR Tech Service</h1>
+</header>
 
-  <section>
-    <h2>Über mich</h2>
-    <p>
-      Hallo, ich bin Nikita 👋<br>
-      Ich interessiere mich sehr für Technik und helfe gerne bei
-      <strong>leichten technischen Problemen</strong> rund um PC, Laptop,
-      Handy und Software.
-    </p>
-  </section>
+<main>
+    <h2>Willkommen!</h2>
+    <p>Ich helfe dir bei leichten technischen Problemen. Meine Hilfe kostet <strong>10 Euro</strong>.</p>
+    <button onclick="location.href='mailto:nrtechservice@gmail.com'">Mir eine E-Mail schreiben</button>
+</main>
 
-  <section>
-    <h2>Wobei ich helfen kann</h2>
-    <ul>
-      <li>PC & Laptop einrichten</li>
-      <li>Windows & macOS Grundlagen erklären</li>
-      <li>Programme installieren</li>
-      <li>Handy & Apps einrichten</li>
-      <li>Allgemeine Technik-Fragen</li>
-    </ul>
-  </section>
+<div id="adminMenu">
+    <h2>Admin-Menü</h2>
+    <p>Gesamtbesucher: <span id="visitorCount">0</span></p>
+    <p>Geräteverteilung:</p>
+    <canvas id="deviceChart" width="300" height="200"></canvas>
+    <button onclick="closeAdminMenu()">Schließen</button>
+</div>
 
-  <section class="contact">
-    <h2>Kontakt</h2>
-    <p>
-      Du brauchst Hilfe oder hast eine Frage?<br>
-      Schreib mir einfach eine E-Mail:
-    </p>
-    <a class="button" href="mailto:nrtechservice27@gmail.com?subject=Technik-Hilfe Anfrage">
-      E-Mail senden
-    </a>
-    <p style="margin-top:15px; font-size:14px; color:#666;">
-      (Bitte beschreibe kurz dein Problem)
-    </p>
-  </section>
-
-  <footer>
-    <p>© 2025 Nikita – private Technik-Hilfe</p>
-  </footer>
-
-  <!-- ================= ADMIN & STATISTIKEN ================= -->
-  <script>
-    const today = new Date().toDateString();
-
-    // Gesamtbesucher
-    let total = Number(localStorage.getItem("totalVisits") || 0) + 1;
-    localStorage.setItem("totalVisits", total);
-
-    // Besucher pro Tag
-    let daily = JSON.parse(localStorage.getItem("dailyVisits") || "{}");
-    daily[today] = (daily[today] || 0) + 1;
-    localStorage.setItem("dailyVisits", JSON.stringify(daily));
-
-    // Gerätetyp
-    const device = /Mobi|Android/i.test(navigator.userAgent) ? "Handy" : "PC";
-    let devices = JSON.parse(localStorage.getItem("devices") || "{}");
-    devices[device] = (devices[device] || 0) + 1;
-    localStorage.setItem("devices", JSON.stringify(devices));
-
-    // Sprache
-    const lang = navigator.language;
-    let languages = JSON.parse(localStorage.getItem("languages") || "{}");
-    languages[lang] = (languages[lang] || 0) + 1;
-    localStorage.setItem("languages", JSON.stringify(languages));
-
-    // Zeit auf der Seite
-    const start = Date.now();
-    window.addEventListener("beforeunload", () => {
-      let seconds = Math.round((Date.now() - start) / 1000);
-      let times = JSON.parse(localStorage.getItem("times") || "[]");
-      times.push(seconds);
-      localStorage.setItem("times", JSON.stringify(times));
-    });
-
-    // ADMIN LOGIN
-    const ADMIN_PASSWORD = Rezon7; // ← HIER ÄNDERN
-
-    document.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
-        const pw = prompt("Admin Passwort:");
-        if (pw === ADMIN_PASSWORD) {
-          window.location.href = "admin.html";
-        } else {
-          alert("Falsches Passwort");
-        }
-      }
-    });
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  alert("JS läuft 👍");
+let adminPassword = "1234"; // Dein Admin-Passwort
+let visitors = JSON.parse(localStorage.getItem('visitors')) || [];
+
+function getDeviceType() {
+    const ua = navigator.userAgent;
+    if(/Mobi|Android/i.test(ua)) return "Mobil";
+    if(/Tablet|iPad/i.test(ua)) return "Tablet";
+    return "Desktop";
+}
+
+// Besucher speichern
+visitors.push({time: new Date(), device: getDeviceType()});
+localStorage.setItem('visitors', JSON.stringify(visitors));
+
+// Admin-Menü öffnen
+document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v'){
+        let pass = prompt("Admin-Passwort eingeben:");
+        if(pass === adminPassword){
+            showAdminMenu();
+        } else {
+            alert("Falsches Passwort!");
+        }
+    }
+});
+
+function showAdminMenu() {
+    document.getElementById('adminMenu').style.display = "block";
+
+    // Besucherzahlen aktualisieren
+    document.getElementById('visitorCount').textContent = visitors.length;
+
+    // Gerätediagramm erstellen
+    let deviceCount = {Desktop: 0, Mobil: 0, Tablet: 0};
+    visitors.forEach(v => deviceCount[v.device] ? deviceCount[v.device]++ : null);
+
+    const ctx = document.getElementById('deviceChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Desktop', 'Mobil', 'Tablet'],
+            datasets: [{
+                label: 'Geräteverteilung',
+                data: [deviceCount.Desktop, deviceCount.Mobil, deviceCount.Tablet],
+                backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+            }]
+        },
+        options: { responsive: false }
+    });
+}
+
+function closeAdminMenu() {
+    document.getElementById('adminMenu').style.display = "none";
+}
 </script>
 
 </body>
