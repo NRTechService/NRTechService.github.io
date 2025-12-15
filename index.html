@@ -5,25 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NR Tech Service</title>
 <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-    header { background: #333; color: #fff; padding: 20px; text-align: center; }
-    main { padding: 20px; max-width: 800px; margin: auto; }
-    button { background: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
-    button:hover { background: #0056b3; }
-    #adminMenu { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: #fff; padding: 20px; border: 2px solid #333; border-radius: 10px; z-index: 1000; }
-    #adminMenu h2 { margin-top: 0; }
+    /* Grundlegendes Styling */
+    body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #a8edea, #fed6e3); color: #333; }
+    header { background: #ff6f61; color: #fff; padding: 40px 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 2.5em; }
+    main { padding: 40px 20px; max-width: 900px; margin: auto; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+    h2 { color: #ff6f61; }
+    p { line-height: 1.6; }
+
+    section { margin-bottom: 40px; }
+
+    button { background: #ff6f61; color: #fff; border: none; padding: 15px 25px; cursor: pointer; border-radius: 8px; font-size: 1em; transition: 0.3s; }
+    button:hover { background: #e65b50; }
+
+    /* Admin Menü */
+    #adminMenu { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: #fff; padding: 30px; border: 3px solid #ff6f61; border-radius: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 350px; }
+    #adminMenu h2 { margin-top: 0; color: #ff6f61; }
 </style>
 </head>
 <body>
 
 <header>
     <h1>NR Tech Service</h1>
+    <p>Dein Helfer bei leichten technischen Problemen – zuverlässig & günstig!</p>
 </header>
 
 <main>
-    <h2>Willkommen!</h2>
-    <p>Ich helfe dir bei leichten technischen Problemen. Meine Hilfe kostet <strong>10 Euro</strong>.</p>
-    <button onclick="location.href='mailto:nrtechservice@gmail.com'">Mir eine E-Mail schreiben</button>
+    <section>
+        <h2>Über mich</h2>
+        <p>Hallo, ich bin Nikita. Ich helfe dir bei kleinen technischen Problemen rund um Computer, Smartphones und Tablets. Egal ob Installation von Software, Fehlerbehebung oder Tipps zur Nutzung – ich bin für dich da.</p>
+    </section>
+
+    <section>
+        <h2>Meine Leistungen</h2>
+        <ul>
+            <li>Installation und Einrichtung von Programmen</li>
+            <li>Problemlösung bei Computer- oder Handy-Problemen</li>
+            <li>Erklärung von technischen Abläufen einfach und verständlich</li>
+            <li>Hilfe bei Updates oder Optimierungen deines Geräts</li>
+            <li>Tipps zur Datensicherung und Sicherheit</li>
+        </ul>
+        <p>Für meine Hilfe berechne ich <strong>10 Euro</strong> pro Problem.</p>
+    </section>
+
+    <section>
+        <h2>Kontakt</h2>
+        <p>Wenn du Hilfe brauchst, klicke einfach auf den Knopf und sende mir eine E-Mail:</p>
+        <button onclick="location.href='mailto:nrtechservice@gmail.com'">Mir eine E-Mail schreiben</button>
+    </section>
 </main>
 
 <div id="adminMenu">
@@ -39,6 +69,7 @@
 let adminPassword = "1234"; // Dein Admin-Passwort
 let visitors = JSON.parse(localStorage.getItem('visitors')) || [];
 
+// Gerätetyp ermitteln
 function getDeviceType() {
     const ua = navigator.userAgent;
     if(/Mobi|Android/i.test(ua)) return "Mobil";
@@ -64,11 +95,8 @@ document.addEventListener('keydown', function(e){
 
 function showAdminMenu() {
     document.getElementById('adminMenu').style.display = "block";
-
-    // Besucherzahlen aktualisieren
     document.getElementById('visitorCount').textContent = visitors.length;
 
-    // Gerätediagramm erstellen
     let deviceCount = {Desktop: 0, Mobil: 0, Tablet: 0};
     visitors.forEach(v => deviceCount[v.device] ? deviceCount[v.device]++ : null);
 
