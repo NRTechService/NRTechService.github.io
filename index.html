@@ -75,7 +75,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-let adminPassword = Rezon7;
+let adminPassword = "1234";
 let visitors = JSON.parse(localStorage.getItem('visitors')) || [];
 
 function getDeviceType() {
@@ -85,11 +85,13 @@ function getDeviceType() {
     return "Desktop";
 }
 
+// Besucher speichern
 visitors.push({time: new Date(), device: getDeviceType()});
 localStorage.setItem('visitors', JSON.stringify(visitors));
 
+// Admin-Menü öffnen (Strg+Shift+V oder Cmd+Shift+V auf Mac)
 document.addEventListener('keydown', function(e){
-    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v'){
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
         let pass = prompt("Admin-Passwort eingeben:");
         if(pass === adminPassword){
             showAdminMenu();
