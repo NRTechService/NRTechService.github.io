@@ -1,0 +1,114 @@
+<!-- =========================
+  DATEI 1: index.html
+  Öffentliche Website
+========================= -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Nikita Tech Service</title>
+</head>
+<body>
+  <h1>Willkommen bei meinem Tech‑Service</h1>
+  <p>Ich helfe bei leichten technischen Problemen.</p>
+
+  <script>
+    /* === STATISTIKEN SAMMELN === */
+    const today = new Date().toDateString();
+
+    // Gesamtbesucher
+    let total = Number(localStorage.getItem("totalVisits") || 0) + 1;
+    localStorage.setItem("totalVisits", total);
+
+    // Besucher heute
+    let daily = JSON.parse(localStorage.getItem("dailyVisits") || "{}");
+    daily[today] = (daily[today] || 0) + 1;
+    localStorage.setItem("dailyVisits", JSON.stringify(daily));
+
+    // Gerät
+    const device = /Mobi|Android/i.test(navigator.userAgent) ? "Handy" : "PC";
+    let devices = JSON.parse(localStorage.getItem("devices") || "{}");
+    devices[device] = (devices[device] || 0) + 1;
+    localStorage.setItem("devices", JSON.stringify(devices));
+
+    // Sprache
+    const lang = navigator.language;
+    let languages = JSON.parse(localStorage.getItem("languages") || "{}");
+    languages[lang] = (languages[lang] || 0) + 1;
+    localStorage.setItem("languages", JSON.stringify(languages));
+
+    // Seitenzeit
+    const start = Date.now();
+    window.addEventListener("beforeunload", () => {
+      let time = Math.round((Date.now() - start) / 1000);
+      let times = JSON.parse(localStorage.getItem("times") || "[]");
+      times.push(time);
+      localStorage.setItem("times", JSON.stringify(times));
+    });
+
+    // Admin Login (STRG + SHIFT + A)
+    const ADMIN_PASSWORD = "DEINPASSWORT"; // ← ändern!
+
+    document.addEventListener("keydown", e => {
+      if (e.ctrlKey && e.shiftKey && e.key === "A") {
+        const pw = prompt("Admin Passwort:");
+        if (pw === ADMIN_PASSWORD) {
+          window.location.href = "admin.html";
+        } else {
+          alert("Falsches Passwort");
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+<!-- =========================
+  DATEI 2: admin.html
+  NUR FÜR DICH
+========================= -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Statistik</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>📊 Admin Statistik</h1>
+
+  <canvas id="visits"></canvas>
+  <canvas id="devices"></canvas>
+  <canvas id="languages"></canvas>
+  <canvas id="time"></canvas>
+
+  <script>
+    const daily = JSON.parse(localStorage.getItem("dailyVisits") || "{}");
+    const devices = JSON.parse(localStorage.getItem("devices") || "{}");
+    const languages = JSON.parse(localStorage.getItem("languages") || "{}");
+    const times = JSON.parse(localStorage.getItem("times") || "[]");
+
+    new Chart(visits, {
+      type: "bar",
+      data: { labels: Object.keys(daily), datasets: [{ label: "Besucher / Tag", data: Object.values(daily) }] }
+    });
+
+    new Chart(devices, {
+      type: "pie",
+      data: { labels: Object.keys(devices), datasets: [{ data: Object.values(devices) }] }
+    });
+
+    new Chart(languages, {
+      type: "doughnut",
+      data: { labels: Object.keys(languages), datasets: [{ data: Object.values(languages) }] }
+    });
+
+    const avgTime = times.reduce((a,b)=>a+b,0)/(times.length||1);
+    new Chart(time, {
+      type: "bar",
+      data: { labels: ["Ø Zeit (Sek.)"], datasets: [{ data: [avgTime.toFixed(1)] }] }
+    });
+  </script>
+</body>
+</html>
