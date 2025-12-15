@@ -100,6 +100,26 @@
   <footer>
     <p>© 2025 Nikita – private Technik-Hilfe</p>
   </footer>
+<script>
+  // Besucher zählen
+  let visits = localStorage.getItem("visits");
+  visits = visits ? Number(visits) + 1 : 1;
+  localStorage.setItem("visits", visits);
 
+  // Geheimes Admin-Passwort
+  const password = "MEINPASSWORT"; // ← hier ändern!
+
+  // Tastenkombination: STRG + SHIFT + V
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.shiftKey && e.key === "V") {
+      const input = prompt("Admin Passwort eingeben:");
+      if (input === password) {
+        alert("Besucher insgesamt: " + visits);
+      } else {
+        alert("Falsches Passwort");
+      }
+    }
+  });
+</script>
 </body>
 </html>
