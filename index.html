@@ -2,15 +2,17 @@
 <html lang="de">
 <head>
   <!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-_O-GwljPQPBuJIK-ZpzR8.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
-</script>
+  <script async src="https://plausible.io/js/pa-_O-GwljPQPBuJIK-ZpzR8.js"></script>
+  <script>
+    window.plausible = window.plausible || function () {
+      (plausible.q = plausible.q || []).push(arguments)
+    };
+  </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nikita – Technik-Hilfe</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,6 +61,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -70,7 +73,9 @@
     <h2>Über mich</h2>
     <p>
       Hallo, ich bin Nikita 👋<br>
-      Ich interessiere mich sehr für Technik und helfe gerne bei <strong>leichten technischen Problemen</strong> rund um PC, Laptop, Handy und Software.
+      Ich interessiere mich sehr für Technik und helfe gerne bei
+      <strong>leichten technischen Problemen</strong> rund um PC, Laptop,
+      Handy und Software.
     </p>
   </section>
 
@@ -91,7 +96,9 @@
       Du brauchst Hilfe oder hast eine Frage?<br>
       Schreib mir einfach eine E-Mail:
     </p>
-    <a class="button" href="mailto:nrtechservice27@gmail.com?subject=Technik-Hilfe Anfrage">E-Mail senden</a>
+    <a class="button" href="mailto:nrtechservice27@gmail.com?subject=Technik-Hilfe Anfrage">
+      E-Mail senden
+    </a>
     <p style="margin-top:15px; font-size:14px; color:#666;">
       (Bitte beschreibe kurz dein Problem)
     </p>
@@ -101,7 +108,54 @@
     <p>© 2025 Nikita – private Technik-Hilfe</p>
   </footer>
 
-</script>
-  
+  <!-- ================= ADMIN & STATISTIKEN ================= -->
+  <script>
+    const today = new Date().toDateString();
+
+    // Gesamtbesucher
+    let total = Number(localStorage.getItem("totalVisits") || 0) + 1;
+    localStorage.setItem("totalVisits", total);
+
+    // Besucher pro Tag
+    let daily = JSON.parse(localStorage.getItem("dailyVisits") || "{}");
+    daily[today] = (daily[today] || 0) + 1;
+    localStorage.setItem("dailyVisits", JSON.stringify(daily));
+
+    // Gerätetyp
+    const device = /Mobi|Android/i.test(navigator.userAgent) ? "Handy" : "PC";
+    let devices = JSON.parse(localStorage.getItem("devices") || "{}");
+    devices[device] = (devices[device] || 0) + 1;
+    localStorage.setItem("devices", JSON.stringify(devices));
+
+    // Sprache
+    const lang = navigator.language;
+    let languages = JSON.parse(localStorage.getItem("languages") || "{}");
+    languages[lang] = (languages[lang] || 0) + 1;
+    localStorage.setItem("languages", JSON.stringify(languages));
+
+    // Zeit auf der Seite
+    const start = Date.now();
+    window.addEventListener("beforeunload", () => {
+      let seconds = Math.round((Date.now() - start) / 1000);
+      let times = JSON.parse(localStorage.getItem("times") || "[]");
+      times.push(seconds);
+      localStorage.setItem("times", JSON.stringify(times));
+    });
+
+    // ADMIN LOGIN
+    const ADMIN_PASSWORD = Rezon7; // ← HIER ÄNDERN
+
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "a") {
+        const pw = prompt("Admin Passwort:");
+        if (pw === ADMIN_PASSWORD) {
+          window.location.href = "admin.html";
+        } else {
+          alert("Falsches Passwort");
+        }
+      }
+    });
+  </script>
+
 </body>
 </html>
